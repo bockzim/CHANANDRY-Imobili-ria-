@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1b140c">
+<title>Painel · Chanandry Imobiliária</title>
+<link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/admin.css?v=1">
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="admin.html"><svg viewBox="0 0 56 52" aria-hidden="true"><defs><linearGradient id="ag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6e2a4"/><stop offset=".5" stop-color="#d4a64f"/><stop offset="1" stop-color="#9a6f25"/></linearGradient></defs><path d="M6 27 28 7l22 20" fill="none" stroke="url(#ag)" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/><g fill="url(#ag)"><rect x="22" y="22" width="5" height="5"/><rect x="29" y="22" width="5" height="5"/><rect x="22" y="29" width="5" height="5"/><rect x="29" y="29" width="5" height="5"/></g><path d="M8 40c12 6 30 6 42-4" fill="none" stroke="url(#ag)" stroke-width="3.2" stroke-linecap="round"/></svg><span><b>Painel</b><small>Chanandry Imobiliária</small></span></a>
+    <span class="chip-st" id="st" role="status"></span>
+    <a class="b b-line" href="index.html?preview" target="_blank" rel="noopener" id="btnPrev">Ver prévia</a>
+    <button class="b b-gold" type="button" id="btnPub">Publicar</button>
+  </div>
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Seções do painel">
+    <button role="tab" data-t="imoveis" aria-selected="true">Imóveis</button>
+    <button role="tab" data-t="textos" aria-selected="false">Textos e contatos</button>
+    <button role="tab" data-t="equipe" aria-selected="false">Equipe</button>
+    <button role="tab" data-t="servicos" aria-selected="false">Serviços e dúvidas</button>
+    <button role="tab" data-t="publicar" aria-selected="false">Publicar</button>
+  </nav>
+</header>
+
+<main class="main" id="view"></main>
+
+<dialog class="ed" id="ed" aria-label="Editar imóvel"></dialog>
+<dialog class="cf" id="cf"></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/js/data.js?v=1"></script>
+<script src="assets/js/core.js?v=1"></script>
+<script src="assets/js/admin.js?v=1"></script>
+</body>
+</html>
