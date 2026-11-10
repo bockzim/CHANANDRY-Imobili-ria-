@@ -319,26 +319,30 @@
     for (var i = 0; i < want.length; i++) out.push({ path: want[i], blob: await Core.getBlob(want[i]) });
     return out.filter(function (o) { return o.blob; });
   }
+  function ghCfg() {
+    var g = ls(K_GH, {}), pb = (window.SITE_DATA && window.SITE_DATA.publicacao) || {};
+    return { repo: g.repo || pb.repo || '', branch: g.branch || pb.branch || 'main', token: g.token || '' };
+  }
   function viewPublicar() {
-    var gh = ls(K_GH, {});
-    var d = dirty();
-    return '<div class="h"><div><h2>Publicar</h2><p class="sub">' + (d ? 'Você tem alterações que ainda não estão no site.' : 'O site está igual ao que você vê no painel.') + ' Antes de publicar, confira em <b>Ver prévia</b>.</p></div><a class="b b-line" href="index.html?preview" target="_blank" rel="noopener">Ver prévia do site</a></div>' +
-      '<section class="card"><h3>Opção 1 · Publicar direto no GitHub <small>1 clique</small></h3><p class="sub" style="margin-bottom:12px">O painel envia as mudanças e o site atualiza sozinho em cerca de 1 a 2 minutos. Precisa de um "token" do GitHub (feito uma vez).</p>' +
-      '<div class="grid2"><label class="fld"><span>Repositório (dono/nome)</span><input id="ghRepo" placeholder="usuario/nome-do-repositorio" value="' + esc(gh.repo || '') + '" autocomplete="off"></label>' +
-      '<label class="fld"><span>Ramo (branch)</span><input id="ghBranch" value="' + esc(gh.branch || 'main') + '" autocomplete="off"></label>' +
-      '<label class="fld full"><span>Token de acesso</span><input id="ghToken" type="password" placeholder="github_pat_…" value="' + esc(gh.token || '') + '" autocomplete="off"></label></div>' +
-      '<label class="chk"><input id="ghRem" type="checkbox"' + (gh.token ? ' checked' : '') + '> Lembrar o token neste aparelho (use só em um aparelho seu)</label>' +
-      '<div class="row-tools" style="margin-top:6px"><button class="b b-line" type="button" id="ghTest">Testar conexão</button><button class="b b-gold" type="button" id="ghGo">Publicar agora</button></div><div class="log" id="log" aria-live="polite">Pronto.</div>' +
-      '<details class="hp"><summary>Como criar o token (1 vez)</summary><div><ol class="steps"><li>Entre no GitHub com a conta dona do repositório e abra <b>Settings → Developer settings → Personal access tokens → Fine-grained tokens</b>.</li><li>Toque em <b>Generate new token</b>. Em "Repository access", escolha <b>Only select repositories</b> e marque o repositório do site.</li><li>Em "Permissions → Repository permissions", deixe <b>Contents: Read and write</b>. Gere o token e copie.</li><li>Cole aqui em "Token de acesso". Ele fica só no seu navegador e nunca vai para o site.</li></ol></div></details></section>' +
-      '<section class="card"><h3>Opção 2 · Pacote para enviar manualmente <small>sem token</small></h3><p class="sub" style="margin-bottom:12px">Baixa um arquivo .zip com tudo o que mudou. Depois você envia para o GitHub.</p><div class="row-tools"><button class="b b-gold" type="button" id="zipGo">Baixar pacote (.zip)</button></div>' +
-      '<details class="hp"><summary>Como enviar o pacote</summary><div><ol class="steps"><li>Abra o arquivo .zip baixado e extraia as pastas.</li><li>No GitHub, abra o repositório do site e toque em <b>Add file → Upload files</b>.</li><li>Arraste a pasta <b>assets</b> extraída (ela contém o arquivo de dados e as fotos). Se o GitHub perguntar, aceite substituir.</li><li>Toque em <b>Commit changes</b>. Em 1 a 2 minutos o site atualiza.</li></ol></div></details></section>' +
-      '<section class="card"><h3>Outras ações</h3><div class="row-tools"><button class="b b-line" type="button" id="discard">Descartar alterações</button><button class="b b-line" type="button" id="rmDemo">Apagar imóveis de exemplo</button></div>' +
-      '<p class="sub">Importante: este painel não é um cadeado. Ele só muda o que está no seu navegador. Nada vai ao ar sem o token do GitHub ou sem o envio do pacote, então só quem tem acesso ao repositório consegue publicar.</p></section>';
+    var g = ghCfg(), d = dirty(), ok = !!g.token;
+    return '<div class="h"><div><h2>Publicar</h2><p class="sub">Quando terminar de editar, publique para as mudanças aparecerem no site. Antes, confira como ficou em <b>Ver prévia</b>.</p></div><a class="b b-line" href="index.html?preview" target="_blank" rel="noopener">Ver prévia do site</a></div>' +
+      '<section class="card"><h3>Publicar no site</h3>' +
+      '<p class="sub" style="margin-bottom:14px">' + (d ? 'Você tem alterações que ainda não estão no ar.' : 'O site está igual ao que você vê aqui. Nada para publicar agora.') + '</p>' +
+      (ok ? '' : '<label class="fld" style="margin-bottom:12px"><span>Chave de publicação</span><input id="ghToken" type="password" placeholder="Cole aqui a chave que você recebeu" autocomplete="off"><small>Você só precisa colar uma vez neste aparelho.</small></label>') +
+      '<div class="row-tools"><button class="b b-gold" type="button" id="ghGo">Publicar agora</button></div>' +
+      '<div class="log" id="log" aria-live="polite">' + (ok ? 'Tudo pronto para publicar.' : 'Cole a chave acima para começar.') + '</div>' +
+      '<p class="sub" style="margin-top:10px">Depois de publicar, o site atualiza sozinho em 1 a 2 minutos.</p></section>' +
+      '<section class="card"><h3>Outras ações</h3><div class="row-tools"><button class="b b-line" type="button" id="discard">Descartar alterações</button><button class="b b-line" type="button" id="rmDemo">Apagar imóveis de exemplo</button></div></section>' +
+      '<details class="hp"><summary>Opções avançadas</summary><div>' +
+      '<div class="grid2"><label class="fld"><span>Repositório</span><input id="ghRepo" value="' + esc(g.repo) + '" autocomplete="off"></label><label class="fld"><span>Ramo</span><input id="ghBranch" value="' + esc(g.branch) + '" autocomplete="off"></label></div>' +
+      (ok ? '<div class="row-tools"><button class="b b-line sm" type="button" id="ghForget">Trocar a chave neste aparelho</button></div>' : '') +
+      '<div class="row-tools"><button class="b b-line sm" type="button" id="ghTest">Testar conexão</button><button class="b b-line sm" type="button" id="zipGo">Baixar pacote (.zip)</button></div></div></details>';
   }
   function logLine(m, cls) { var l = $('#log'); if (!l) return; var s = document.createElement('div'); if (cls) s.className = cls; s.textContent = m; l.appendChild(s); l.scrollTop = l.scrollHeight; }
   function readGh() {
-    var g = { repo: $('#ghRepo').value.trim().replace(/^https?:\/\/github\.com\//, '').replace(/\.git$/, '').replace(/\/$/, ''), branch: $('#ghBranch').value.trim() || 'main', token: $('#ghToken').value.trim() };
-    lsSet(K_GH, { repo: g.repo, branch: g.branch, token: $('#ghRem').checked ? g.token : '' });
+    var cur = ghCfg(), tk = $('#ghToken'), rp = $('#ghRepo'), br = $('#ghBranch');
+    var g = { repo: (rp ? rp.value : cur.repo).trim().replace(/^https?:\/\/github\.com\//, '').replace(/\.git$/, '').replace(/\/$/, ''), branch: ((br ? br.value : cur.branch).trim() || 'main'), token: (tk && tk.value.trim()) || cur.token };
+    if (g.token) lsSet(K_GH, { repo: g.repo, branch: g.branch, token: g.token });
     return g;
   }
   async function gh(g, path, opt) {
@@ -346,7 +350,7 @@
     if (!r.ok) {
       var t = ''; try { t = (await r.json()).message; } catch (e) { /* ignora */ }
       var hint = r.status === 401 ? ' (token inválido ou vencido)' : r.status === 403 ? ' (o token não tem permissão de escrita neste repositório)' : r.status === 404 ? ' (repositório ou ramo não encontrado, ou o token não enxerga este repositório)' : '';
-      throw new Error('GitHub ' + r.status + (t ? ': ' + t : '') + hint);
+      throw new Error(r.status === 401 ? 'A chave não é válida ou venceu. Use "Trocar a chave" em Opções avançadas.' : r.status === 403 || r.status === 404 ? 'Sem permissão para publicar. Confira a chave e o repositório em Opções avançadas.' : 'Não foi possível publicar agora (' + r.status + '). Tente de novo em instantes.');
     }
     return r.json();
   }
@@ -354,12 +358,12 @@
   async function ghPublish(g) {
     var files = [{ path: 'assets/js/data.js', blob: new Blob([Core.dataJs(draft)], { type: 'text/javascript' }) }];
     var imgs = await pendingBlobs(true); imgs.forEach(function (o) { files.push({ path: o.path, blob: o.blob }); });
-    logLine('Arquivos a enviar: ' + files.length + ' (' + imgs.length + ' foto(s) nova(s) + dados).');
-    var ref = await gh(g, '/git/ref/heads/' + encodeURIComponent(g.branch).replace(/%2F/g, '/')); var base = ref.object.sha; logLine('Ramo ' + g.branch + ' encontrado.');
+    logLine('Preparando ' + (imgs.length ? imgs.length / 2 + ' foto(s) nova(s) e ' : '') + 'as alterações…');
+    var ref = await gh(g, '/git/ref/heads/' + encodeURIComponent(g.branch).replace(/%2F/g, '/')); var base = ref.object.sha;
     var commit = await gh(g, '/git/commits/' + base);
     var tree = [];
     for (var i = 0; i < files.length; i++) {
-      logLine('Enviando ' + (i + 1) + '/' + files.length + ': ' + files[i].path);
+      logLine('Enviando ' + (i + 1) + ' de ' + files.length + '…');
       var bl = await gh(g, '/git/blobs', { method: 'POST', body: JSON.stringify({ content: await b64(files[i].blob), encoding: 'base64' }) });
       tree.push({ path: files[i].path, mode: '100644', type: 'blob', sha: bl.sha });
     }
@@ -368,20 +372,21 @@
     await gh(g, '/git/refs/heads/' + g.branch, { method: 'PATCH', body: JSON.stringify({ sha: nc.sha }) });
     lsSet(K_PUSHED, ls(K_PUSHED, []).concat(imgs.map(function (o) { return o.path; })));
     localStorage.setItem(K_LAST, JSON.stringify(draft)); paintStatus();
-    logLine('Publicado! O site atualiza em 1 a 2 minutos. Se não mudar, atualize a página com força (ou aba anônima).', 'o');
+    logLine('Publicado! O site atualiza em 1 a 2 minutos.', 'o');
   }
   function bindPublicar() {
     $('#ghTest').onclick = async function () {
       var g = readGh(); $('#log').textContent = '';
-      if (!/^[^/\s]+\/[^/\s]+$/.test(g.repo) || !g.token) { logLine('Preencha o repositório (dono/nome) e o token.', 'e'); return; }
+      if (!/^[^/\s]+\/[^/\s]+$/.test(g.repo) || !g.token) { logLine('Confira o repositório e a chave de publicação.', 'e'); return; }
       try { var r = await gh(g, ''); logLine('Conectado a ' + r.full_name + '. Permissão de escrita: ' + (r.permissions && r.permissions.push ? 'sim' : 'NÃO'), r.permissions && r.permissions.push ? 'o' : 'e'); }
       catch (e) { logLine(e.message, 'e'); }
     };
     $('#ghGo').onclick = async function () {
       var g = readGh(); $('#log').textContent = '';
-      if (!/^[^/\s]+\/[^/\s]+$/.test(g.repo) || !g.token) { logLine('Preencha o repositório (dono/nome) e o token.', 'e'); return; }
+      if (!/^[^/\s]+\/[^/\s]+$/.test(g.repo)) { logLine('Confira o repositório em Opções avançadas.', 'e'); return; }
+      if (!g.token) { logLine('Cole a chave de publicação para continuar.', 'e'); return; }
       this.disabled = true;
-      try { await ghPublish(g); } catch (e) { logLine('Erro: ' + e.message, 'e'); }
+      try { await ghPublish(g); } catch (e) { logLine(e.message, 'e'); }
       this.disabled = false;
     };
     $('#zipGo').onclick = async function () {
@@ -390,6 +395,7 @@
       files.push({ name: 'LEIA-ME-ATUALIZACAO.txt', data: 'Pacote de atualização do site.\n\nEnvie a pasta "assets" para o repositório do site (GitHub > Add file > Upload files) e confirme em "Commit changes".\nO arquivo assets/js/data.js tem os textos e imóveis; as fotos novas estão em assets/img/.\n' });
       Core.download(await Core.zip(files), 'atualizacao-site-' + today() + '.zip'); toast('Pacote baixado');
     };
+    var fg = $('#ghForget'); if (fg) fg.onclick = function () { var c = ghCfg(); lsSet(K_GH, { repo: c.repo, branch: c.branch, token: '' }); render(); toast('Chave removida deste aparelho'); };
     $('#discard').onclick = async function () {
       if (!await ask('Descartar alterações?', 'Tudo o que você mudou e ainda não publicou será perdido neste aparelho.', 'Descartar', true)) return;
       Core.clearDraft(); localStorage.removeItem(K_LAST); await Core.clearBlobs(); lsSet(K_PUSHED, []);

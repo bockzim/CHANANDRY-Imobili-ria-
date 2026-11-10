@@ -387,5 +387,9 @@ window.SITE_DATA = {
    "corretora": "kannanda",
    "criadoEm": "2026-11-03"
   }
- ]
+ ],
+ "publicacao": {
+  "repo": "bockzim/CHANANDRY-Imobili-ria-",
+  "branch": "main"
+ }
 };
