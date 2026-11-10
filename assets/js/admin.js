@@ -245,7 +245,7 @@
     ['Sobre a empresa', [['textos.sobreEyebrow', 'Frase pequena'], ['textos.sobreTitulo', 'Título'], ['textos.sobreTexto', 'Texto (um parágrafo por linha)', 'list'], ['textos.sobreImagem', 'Foto da seção', 'image']]],
     ['Financiamento', [['textos.financiarTitulo', 'Título'], ['textos.financiarSub', 'Texto', 'textarea'], ['textos.taxaPadrao', 'Juros ao ano sugeridos no simulador (%)', 'number']]],
     ['Contato e rodapé', [['textos.contatoTitulo', 'Título'], ['textos.contatoSub', 'Texto', 'textarea'], ['textos.rodape', 'Frase do rodapé'], ['empresa.instagram', 'Instagram (sem @)'], ['empresa.email', 'E-mail (opcional)'], ['empresa.horario', 'Horário de atendimento (opcional)'], ['empresa.areas', 'Região de atendimento']]],
-    ['Empresa e logo', [['empresa.nome', 'Nome'], ['empresa.sub', 'Complemento do nome'], ['empresa.creci', 'CRECI'], ['empresa.cidade', 'Cidade – UF'], ['empresa.logo', 'Logo (opcional)', 'image', 'Se enviar a logo, ela substitui o desenho provisório no topo e no rodapé. Prefira PNG com fundo transparente.']]]
+    ['Empresa e logo', [['empresa.nome', 'Nome'], ['empresa.sub', 'Complemento do nome'], ['empresa.creci', 'CRECI'], ['empresa.cidade', 'Cidade – UF'], ['empresa.logo', 'Logo completa', 'image', 'Aparece no começo do site e no rodapé. Prefira PNG com fundo transparente.'], ['empresa.icone', 'Ícone da casa (topo do site)', 'image', 'Só o desenho, sem o nome. Se ficar vazio, o topo usa um desenho provisório.']]]
   ];
   function viewTextos() {
     return '<div class="h"><div><h2>Textos e contatos</h2><p class="sub">As mudanças são salvas sozinhas neste aparelho. Para ver como ficou, toque em "Ver prévia". Para colocar no ar, use "Publicar".</p></div></div>' +

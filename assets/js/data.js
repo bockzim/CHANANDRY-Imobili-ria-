@@ -4,19 +4,20 @@ window.SITE_DATA = {
  "empresa": {
   "nome": "Chanandry",
   "sub": "Soluções Imobiliárias",
-  "creci": "CRECI PJ 77",
+  "creci": "CRECI-AP 77",
   "cidade": "Macapá – AP",
   "email": "",
   "instagram": "chanandry_imobiliaria",
   "horario": "",
-  "logo": "",
-  "areas": "Atendimento em Macapá e para clientes de outras cidades e estados"
+  "logo": "assets/img/site/logo.webp",
+  "areas": "Atendimento em Macapá e para clientes de outras cidades e estados",
+  "icone": "assets/img/site/icone.webp"
  },
  "textos": {
   "heroEyebrow": "Chanandry · Soluções Imobiliárias",
-  "heroTitulo": "Seu próximo imóvel",
-  "heroDestaque": "está aqui.",
-  "heroSub": "Compra, venda e locação com as melhores oportunidades para você investir, morar ou realizar um novo começo.",
+  "heroTitulo": "O imóvel certo",
+  "heroDestaque": "para o seu próximo capítulo",
+  "heroSub": "Compra, venda, locação, avaliação e consultoria imobiliária com segurança, transparência e atendimento personalizado.",
   "heroImagem": "assets/img/site/hero.webp",
   "confianca": [
    "Segurança",

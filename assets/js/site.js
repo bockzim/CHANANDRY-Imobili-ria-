@@ -22,15 +22,19 @@
 
   /* ---------- logo ---------- */
   var ICON = '<svg class="logo-i" viewBox="0 0 56 52" aria-hidden="true"><path d="M6 27 28 7l22 20" fill="none" stroke="url(#gg)" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M39 15V9h5v10" fill="none" stroke="url(#gg)" stroke-width="3"/><g fill="url(#gg)"><rect x="22" y="22" width="5" height="5"/><rect x="29" y="22" width="5" height="5"/><rect x="22" y="29" width="5" height="5"/><rect x="29" y="29" width="5" height="5"/></g><path d="M8 40c12 6 30 6 42-4" fill="none" stroke="url(#gg)" stroke-width="3" stroke-linecap="round"/></svg>';
-  function logoHTML(big) {
-    if (E.logo) return '<img class="logo-img" src="' + esc(img(E.logo)) + '" alt="' + esc(E.nome + ' ' + E.sub) + '">';
-    return ICON + '<span class="logo-t"><b>' + esc((E.nome || '').toUpperCase()) + '</b><small>' + esc((E.sub || '').toUpperCase()) + '</small></span>';
+  /* modo 'full' = logo completa (rodapé/herói); padrão = ícone + nome (topo, ocupa pouco espaço) */
+  function logoHTML(mode) {
+    var alt = esc((E.nome || '') + ' ' + (E.sub || ''));
+    if (mode === 'full' && E.logo) return '<img class="logo-img" src="' + esc(img(E.logo)) + '" alt="' + alt + '">';
+    var ico = E.icone ? '<img class="logo-i" src="' + esc(img(Core.sm(E.icone))) + '" alt="">' : ICON;
+    return ico + '<span class="logo-t"><b>' + esc((E.nome || '').toUpperCase()) + '</b><small>' + esc((E.sub || '').toUpperCase()) + '</small></span>';
   }
 
   /* ---------- textos fixos ---------- */
   document.title = (E.nome || '') + ' ' + (E.sub || '') + ' | Compra, venda e locação' + (E.cidade ? ' em ' + E.cidade.split(' – ')[0] : '');
   $('#logo').innerHTML = logoHTML();
-  $('#heroEy').textContent = T.heroEyebrow || '';
+  $('#heroBrand').innerHTML = (E.logo ? '<img class="hb-logo" src="' + esc(img(E.logo)) + '" alt="' + esc((E.nome || '') + ' ' + (E.sub || '')) + '" fetchpriority="high">' : '<p class="hb-name">' + esc((E.nome || '').toUpperCase()) + '<small>' + esc((E.sub || '').toUpperCase()) + '</small></p>') +
+    (E.creci ? '<p class="hb-creci"><span>' + esc(E.creci) + '</span></p>' : '');
   $('#heroT').innerHTML = esc(T.heroTitulo) + ' <em>' + esc(T.heroDestaque) + '</em>';
   $('#heroSub').textContent = T.heroSub || '';
   if (T.heroImagem) { var hi = $('#heroImg'); hi.src = img(T.heroImagem); }
@@ -378,7 +382,7 @@
   if (E.horario) ct += '<li><svg class="ico"><use href="#i-home"/></svg><span><small>Horário</small>' + esc(E.horario) + '</span></li>';
   $('#ctList').innerHTML = ct;
   $('#drawerFoot').innerHTML = C.map(function (c) { return '<a class="btn btn-gold" target="_blank" rel="noopener" href="' + esc(wa(c.whatsapp, helloMsg)) + '"><svg class="ico"><use href="#i-wa"/></svg><span>' + esc(c.nome.split(' ')[0]) + ' · WhatsApp</span></a>'; }).join('');
-  $('#footer').innerHTML = '<div class="wrap ft-in"><div class="ft-b"><a class="logo" href="#topo">' + logoHTML() + '</a><p>' + esc(T.rodape || '') + '</p></div>' +
+  $('#footer').innerHTML = '<div class="wrap ft-in"><div class="ft-b"><a class="logo" href="#topo">' + logoHTML('full') + '</a><p>' + esc(T.rodape || '') + '</p></div>' +
     '<nav class="ft-n" aria-label="Rodapé"><a href="#imoveis">Imóveis</a><a href="#servicos">Serviços</a><a href="#financiar">Financiamento</a><a href="#equipe">Equipe</a><a href="#contato">Contato</a></nav>' +
     '<div class="ft-c">' + (ig ? '<a href="https://instagram.com/' + esc(ig) + '" target="_blank" rel="noopener"><svg class="ico"><use href="#i-ig"/></svg>@' + esc(ig) + '</a>' : '') + '<span>' + esc(E.creci || '') + (E.cidade ? ' · ' + esc(E.cidade) : '') + '</span></div></div>' +
     '<div class="wrap ft-l"><span>© ' + new Date().getFullYear() + ' ' + esc((E.nome || '') + ' ' + (E.sub || '')) + '. Todos os direitos reservados.</span></div>';

@@ -24,7 +24,7 @@ As alterações ficam salvas só no navegador usado até você **publicar**.
 
 ## Pendências de conteúdo
 - Os 7 imóveis são **exemplos** (apague no painel quando tiver os reais).
-- A logo é provisória: envie a original em *Textos e contatos → Empresa e logo*.
+- Logo e ícone reais já estão no site (assets/img/site/logo.webp e icone.webp). Para trocar, use o painel em *Textos e contatos → Empresa e logo*.
 - CRECI pessoal, e-mail e horário estão em branco.
 
 ## Observação de segurança
