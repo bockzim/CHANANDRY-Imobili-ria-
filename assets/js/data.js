@@ -157,6 +157,34 @@ window.SITE_DATA = {
  ],
  "imoveis": [
   {
+   "id": "CH-3323",
+   "titulo": "casa bockzim",
+   "finalidade": "venda",
+   "tipo": "Apartamento",
+   "status": "disponivel",
+   "destaque": true,
+   "demo": true,
+   "preco": 20000,
+   "bairro": "lapa",
+   "cidade": "rio de janeiro",
+   "quartos": 3,
+   "suites": 2,
+   "banheiros": 4,
+   "vagas": 2,
+   "area": 1200,
+   "descricao": "testestesdtestestes",
+   "diferenciais": [
+    "testeeeeee"
+   ],
+   "fotos": [
+    "assets/img/imoveis/zjdrvruqe.webp",
+    "assets/img/imoveis/6dhj5njjn.webp",
+    "assets/img/imoveis/t46yyukqi.webp"
+   ],
+   "corretora": "kannanda",
+   "criadoEm": "2026-11-10"
+  },
+  {
    "id": "CH-001",
    "titulo": "Casa de alto padrão com varanda e jardim",
    "finalidade": "venda",
