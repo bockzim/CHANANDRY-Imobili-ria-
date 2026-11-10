@@ -14,7 +14,7 @@ window.SITE_DATA = {
   "icone": "assets/img/site/icone.webp"
  },
  "textos": {
-  "heroEyebrow": "Chanandry · Soluções Imobiliárias",
+  "heroEyebrow": "",
   "heroTitulo": "O imóvel certo",
   "heroDestaque": "para o seu próximo capítulo",
   "heroSub": "Compra, venda, locação, avaliação e consultoria imobiliária com segurança, transparência e atendimento personalizado.",

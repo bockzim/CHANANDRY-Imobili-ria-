@@ -33,7 +33,9 @@
   /* ---------- textos fixos ---------- */
   document.title = (E.nome || '') + ' ' + (E.sub || '') + ' | Compra, venda e locação' + (E.cidade ? ' em ' + E.cidade.split(' – ')[0] : '');
   $('#logo').innerHTML = logoHTML();
-  $('#heroBrand').innerHTML = (E.logo ? '<img class="hb-logo" src="' + esc(img(E.logo)) + '" alt="' + esc((E.nome || '') + ' ' + (E.sub || '')) + '" fetchpriority="high">' : '<p class="hb-name">' + esc((E.nome || '').toUpperCase()) + '<small>' + esc((E.sub || '').toUpperCase()) + '</small></p>') +
+  var iconUrl = E.icone ? img(Core.sm(E.icone)) : '';
+  if (iconUrl) document.documentElement.style.setProperty('--icone', 'url("' + new URL(iconUrl, location.href).href + '")');
+  $('#heroBrand').innerHTML = (iconUrl ? '<img class="hb-icon" src="' + esc(img(E.icone)) + '" alt="' + esc((E.nome || '') + ' ' + (E.sub || '')) + '" fetchpriority="high">' : '<p class="hb-name">' + esc((E.nome || '').toUpperCase()) + '<small>' + esc((E.sub || '').toUpperCase()) + '</small></p>') +
     (E.creci ? '<p class="hb-creci"><span>' + esc(E.creci) + '</span></p>' : '');
   $('#heroT').innerHTML = esc(T.heroTitulo) + ' <em>' + esc(T.heroDestaque) + '</em>';
   $('#heroSub').textContent = T.heroSub || '';
