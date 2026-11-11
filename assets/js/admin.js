@@ -2,6 +2,7 @@
    e só vai para o site quando você publica (GitHub direto ou pacote .zip). */
 (async function () {
   'use strict';
+  if (window.Gate) await Gate.ready();
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var esc = Core.esc;
@@ -332,7 +333,7 @@
       '<div class="row-tools"><button class="b b-gold" type="button" id="ghGo">Publicar agora</button></div>' +
       '<div class="log" id="log" aria-live="polite">' + (ok ? 'Tudo pronto para publicar.' : 'Cole a chave acima para começar.') + '</div>' +
       '<p class="sub" style="margin-top:10px">Depois de publicar, o site atualiza sozinho em 1 a 2 minutos.</p></section>' +
-      '<section class="card"><h3>Outras ações</h3><div class="row-tools"><button class="b b-line" type="button" id="discard">Descartar alterações</button><button class="b b-line" type="button" id="rmDemo">Apagar imóveis de exemplo</button></div></section>' +
+      '<section class="card"><h3>Outras ações</h3><div class="row-tools"><button class="b b-line" type="button" id="discard">Descartar alterações</button><button class="b b-line" type="button" id="rmDemo">Apagar imóveis de exemplo</button><button class="b b-line" type="button" id="logout">Sair do painel</button></div></section>' +
       '<details class="hp"><summary>Opções avançadas</summary><div>' +
       '<div class="grid2"><label class="fld"><span>Repositório</span><input id="ghRepo" value="' + esc(g.repo) + '" autocomplete="off"></label><label class="fld"><span>Ramo</span><input id="ghBranch" value="' + esc(g.branch) + '" autocomplete="off"></label></div>' +
       (ok ? '<div class="row-tools"><button class="b b-line sm" type="button" id="ghForget">Trocar a chave neste aparelho</button></div>' : '') +
@@ -404,6 +405,7 @@
       Core.clearDraft(); localStorage.removeItem(K_LAST); await Core.clearBlobs(); lsSet(K_PUSHED, []);
       draft = Core.published(); render(); toast('Voltou ao que está no ar');
     };
+    $('#logout').onclick = function () { Gate.logout(); };
     $('#rmDemo').onclick = function () { ACT['rm-demo'](); };
   }
 

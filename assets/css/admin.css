@@ -126,3 +126,14 @@ details.hp>div{padding:0 14px 14px;color:var(--mut);font-size:14.5px;display:gri
   .ed{width:min(900px,94vw);height:min(92vh,900px);margin:auto;border-radius:10px;overflow:hidden}
 }
 .row-tools .b{white-space:normal;text-align:center}
+
+/* tela de senha */
+html.lock body>*:not(#gate):not(script){display:none!important}
+#gate{position:fixed;inset:0;display:grid;place-items:center;padding:20px;background:#2e333a;z-index:200}
+.gate-c{width:min(380px,100%);display:grid;gap:14px;justify-items:center;text-align:center;background:#383e46;border:1px solid rgba(214,170,86,.3);border-radius:10px;padding:30px 22px;color:#f3f1ec}
+.gate-c svg{width:64px;height:60px}
+.gate-c h1{font-size:34px}
+.gate-c p{color:#bcc2cb;font-size:15px}
+.gate-c input{text-align:center;background:#2e333a;border-color:rgba(214,170,86,.35);color:#f3f1ec}
+.gate-c .b{width:100%}
+.gate-c .gate-e{color:#ff9c88;min-height:1.3em;font-size:14px}
