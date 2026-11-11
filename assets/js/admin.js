@@ -350,7 +350,7 @@
     if (!r.ok) {
       var t = ''; try { t = (await r.json()).message; } catch (e) { /* ignora */ }
       var hint = r.status === 401 ? ' (token inválido ou vencido)' : r.status === 403 ? ' (o token não tem permissão de escrita neste repositório)' : r.status === 404 ? ' (repositório ou ramo não encontrado, ou o token não enxerga este repositório)' : '';
-      throw new Error(r.status === 401 ? 'A chave não é válida ou venceu. Use "Trocar a chave" em Opções avançadas.' : r.status === 403 || r.status === 404 ? 'Sem permissão para publicar. Confira a chave e o repositório em Opções avançadas.' : 'Não foi possível publicar agora (' + r.status + '). Tente de novo em instantes.');
+      var er = new Error(r.status === 401 ? 'A chave não foi aceita. Cole uma chave válida para tentar de novo.' : r.status === 403 || r.status === 404 ? 'Sem permissão para publicar. Confira a chave e o repositório em Opções avançadas.' : 'Não foi possível publicar agora (' + r.status + '). Tente de novo em instantes.'); er.status = r.status; throw er;
     }
     return r.json();
   }
@@ -386,7 +386,10 @@
       if (!/^[^/\s]+\/[^/\s]+$/.test(g.repo)) { logLine('Confira o repositório em Opções avançadas.', 'e'); return; }
       if (!g.token) { logLine('Cole a chave de publicação para continuar.', 'e'); return; }
       this.disabled = true;
-      try { await ghPublish(g); } catch (e) { logLine(e.message, 'e'); }
+      try { await ghPublish(g); } catch (e) {
+        if (e.status === 401) { lsSet(K_GH, { repo: g.repo, branch: g.branch, token: '' }); render(); logLine(e.message, 'e'); return; }
+        logLine(e.message, 'e');
+      }
       this.disabled = false;
     };
     $('#zipGo').onclick = async function () {
