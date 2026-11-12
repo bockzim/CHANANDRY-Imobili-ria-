@@ -23,7 +23,7 @@
         i.focus();
         f.addEventListener('submit', function (ev) {
           ev.preventDefault(); if (busy) return;
-          if (!window.crypto || !crypto.subtle) { er.textContent = 'Abra o painel pelo endereço do site (https).'; return; }
+          if (!window.crypto || !crypto.subtle) { er.textContent = 'Este endereço ainda não está com cadeado (https). Aguarde alguns minutos e abra de novo.'; return; }
           busy = true; er.textContent = '';
           derive(i.value.trim()).then(function (h) {
             if (h === T()) { open(); res(); return; }
